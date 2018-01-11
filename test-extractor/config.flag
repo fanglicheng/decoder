@@ -1,0 +1,22 @@
+# input data supplied by user
+--parallel_corpus=c,e,c-e.a
+--weightfiles=lex.e2f,lex.f2e
+--lm=/p/mt-scratch2/chung/lm/stages.lc.3gram.lm
+
+# translation input
+--input=tune
+
+# supply a master grammar here
+--unfiltered=rule-dump
+
+# uncomment this option to use per sentence grammar filtering
+#--persent=persent
+
+# system level settings below
+--decoding_method=earley
+--features=LM:0.0089,LengthPenalty:-0.017,GlueRule:-0.00027,GlueRuleCount:0.0,UnknownWord:0.95,HieroLHSConditional:0.0034,HieroRHSConditionalEC:-0.0016,HieroRHSConditionalCE:0.0025,HieroLexicalEC:0.0084,HieroLexicalCE:0.0076,HieroCount:0.0
+--lm_order=3
+--output=output
+--bin_size=16
+--rule_bin_size=16
+--show_time=true

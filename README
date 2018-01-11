@@ -1,0 +1,45 @@
+To run the decoder
+
+  $ ./decoder.py --flagfile FLAGFILE
+
+  Run
+
+  $ ./decoder.py --help
+
+  to see the help message for flags and default values.
+
+  You can override flagfile options by using command line flags. A flagfile can
+  import flags from another flagfile by using the --flagfile flag.
+
+  See test/smoke.flag for an example flagfile.
+
+The output
+
+  You will find these in the directory where you run the decoder:
+
+  - The translation output (the file "output" by default)
+  - The kbest file, if --output_kbest=true (the file "kbest" by default)
+  - A directory containing the detailed decoding results. By default the name of
+    the directory is "run-dir", which is changeable using --run_dir.
+
+To do parallel decoding
+
+  If you have a cluster of machines running on NFS, you can do parallel decoding
+  with the command
+
+  $ ./decoder.py --flagfile FLAGFILE --parallel=true --nodes=f02,f03
+
+  This will start multiple slave instances of the decoder on the hosts specified
+  by --nodes.
+
+Tips
+
+  - With the --do option, the decoder decodes only one sentence ("--do=4") or
+    a range of sentences in the input ("--do=8-10"). Currently this doesn't
+    work in parallel mode.
+
+  - Under running directory, file "run.flag" saves the options you have used to
+    make this run.
+
+  - Under running directory you will also find the hypergraph files and the
+    1-best parse trees.

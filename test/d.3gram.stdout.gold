@@ -1,0 +1,504 @@
+--bin_size=20
+--cpu=25
+--decoding_method=agenda
+--features=LM:4.6051701859880918,ITG:1,UnknownWord:99
+--glue_span=10
+--glue_var=[A]
+--goal_symbol=[GOAL]
+--grammars=d.3gram.grammar
+--heuristic=cyk
+--input=input
+--inverted_var=[INVERTED]
+--kbest_k=100
+--kbest_output=kbest
+--lm=d.lm.3gram.new
+--lm_order=3
+--log=stderr
+--mem=1000000
+--noban_negative_deduction
+--noconsensus_training
+--nodes=f02,f03,f04
+--nomerge_rules_with_same_f
+--nont_mismatch
+--nooutput_hypergraph
+--nooutput_kbest
+--noparallel
+--nopass_unknown_words
+--nopreprocess
+--noshow_time
+--noslave
+--nouse_python_lm
+--output=output
+--port=8940
+--reverse_kbest_feature_score
+--rule_bin_size=5
+--run_dir=run-dir
+--start_symbol=[S]
+--straight_var=[STRAIGHT]
+--time_interval=1000
+--unknown_nonterminal=[C]
+--v=1
+reading LM: d.lm.3gram.new
+d.lm.3gram.new: line 51: warning: 16 2-grams read, expected 19
+loading rules from d.3gram.grammar...
+1%2%3%4%5%6%7%8%9%10%11%12%13%14%15%16%17%18%19%20%21%22%23%24%25%26%
+--Rule Stats--
+itg rules added: 16
+lexical rules added: 11
+itg rules pruned: 0
+lexical rules pruned: 0
+bad rules: 0
+
+[1][2 words] two one
+
+one two
+
+[[GOAL],0,2,(('<s>', '<s>', '_*_', '</s>', '</s>'),),19.97 (19.97+0.00)]
+Deduction: 12.06 (LM:2.62,ITG:-0.00,UnknownWord:0.00) [rule: [GOAL] ||| [S,1] ||| <s> <s> [S,1] </s> </s> ||| 1.0]
+  [[S],0,2,(('one', 'two'),),7.91 (7.91+0.00)]
+  Deduction: 3.88 (LM:0.00,ITG:3.88,UnknownWord:0.00) [rule: [S] ||| [B,1] ||| [B,1] ||| 0.0206613804082]
+    [[B],0,2,(('one', 'two'),),4.03 (4.03+0.00)]
+    Deduction: 1.26 (LM:0.00,ITG:1.26,UnknownWord:0.00) [rule: [B] ||| [C,1] [C,2] ||| [C,2] [C,1] ||| 0.284094687123]
+      [[C],0,1,(('two',),),1.39 (1.39+0.00)]
+      Deduction: 1.39 (LM:0.00,ITG:1.39,UnknownWord:0.00) [rule: [C] ||| two ||| two ||| 0.25]
+      [[C],1,2,(('one',),),1.39 (1.39+0.00)]
+      Deduction: 1.39 (LM:0.00,ITG:1.39,UnknownWord:0.00) [rule: [C] ||| one ||| one ||| 0.25]
+
+-----------------Hypergraph Stats-----------------
+[nodes]:                                         7
+[edges]:                                         8
+
+------------------Decoding Stats------------------
+[non-unary edges proposed]:                      0
+[unary edges proposed]:                          0
+[total edges proposed]:                          0
+[cubes (non-unary -LM edges)]:                   0
+
+-------------------Agenda Stats-------------------
+[pushed]:                                       18
+[popped]:                                       11
+[dead pop]:                                      1
+[closed]:                                       10
+[final agenda size]:                             6
+[neighbors closed]:                              8
+[neighbors tried]:                              15
+
+-------------------Chart Stats--------------------
+[in chart]:                                     17
+[dead in chart]:                                 0
+[pruned]:                                        0
+[prepruned]:                                     0
+[merged]:                                        1
+[unary cycle broken]:                            0
+[negative cost edge pruned]:                     0
+[negative unary edge pruned]:                    0
+
+
+[2][2 words] four three
+
+three four four
+
+[[GOAL],0,2,(('<s>', '<s>', '_*_', '</s>', '</s>'),),18.33 (18.33+0.00)]
+Deduction: 9.98 (LM:2.17,ITG:-0.00,UnknownWord:0.00) [rule: [GOAL] ||| [S,1] ||| <s> <s> [S,1] </s> </s> ||| 1.0]
+  [[S],0,2,(('three', 'four', '_*_', 'four', 'four'),),8.36 (8.36+0.00)]
+  Deduction: 3.88 (LM:0.00,ITG:3.88,UnknownWord:0.00) [rule: [S] ||| [B,1] ||| [B,1] ||| 0.0206613804082]
+    [[B],0,2,(('three', 'four', '_*_', 'four', 'four'),),4.48 (4.48+0.00)]
+    Deduction: 1.70 (LM:0.10,ITG:1.26,UnknownWord:0.00) [rule: [B] ||| [C,1] [C,2] ||| [C,2] [C,1] ||| 0.284094687123]
+      [[C],0,1,(('four', 'four'),),1.39 (1.39+0.00)]
+      Deduction: 1.39 (LM:0.00,ITG:1.39,UnknownWord:0.00) [rule: [C] ||| four ||| four four ||| 0.25]
+      [[C],1,2,(('three',),),1.39 (1.39+0.00)]
+      Deduction: 1.39 (LM:0.00,ITG:1.39,UnknownWord:0.00) [rule: [C] ||| three ||| three ||| 0.25]
+
+-----------------Hypergraph Stats-----------------
+[nodes]:                                         7
+[edges]:                                         8
+
+------------------Decoding Stats------------------
+[non-unary edges proposed]:                      0
+[unary edges proposed]:                          0
+[total edges proposed]:                          0
+[cubes (non-unary -LM edges)]:                   0
+
+-------------------Agenda Stats-------------------
+[pushed]:                                       17
+[popped]:                                       11
+[dead pop]:                                      0
+[closed]:                                       10
+[final agenda size]:                             6
+[neighbors closed]:                              8
+[neighbors tried]:                              15
+
+-------------------Chart Stats--------------------
+[in chart]:                                     17
+[dead in chart]:                                 0
+[pruned]:                                        0
+[prepruned]:                                     0
+[merged]:                                        1
+[unary cycle broken]:                            0
+[negative cost edge pruned]:                     0
+[negative unary edge pruned]:                    0
+
+
+[3][3 words] five five three
+
+three four
+
+[[GOAL],0,3,(('<s>', '<s>', '_*_', '</s>', '</s>'),),20.54 (20.54+0.00)]
+Deduction: 13.32 (LM:2.89,ITG:-0.00,UnknownWord:0.00) [rule: [GOAL] ||| [S,1] ||| <s> <s> [S,1] </s> </s> ||| 1.0]
+  [[S],0,3,(('three', 'four'),),7.22 (7.22+0.00)]
+  Deduction: 3.88 (LM:0.00,ITG:3.88,UnknownWord:0.00) [rule: [S] ||| [B,1] ||| [B,1] ||| 0.0206613804082]
+    [[B],0,3,(('three', 'four'),),3.34 (3.34+0.00)]
+    Deduction: 1.26 (LM:0.00,ITG:1.26,UnknownWord:0.00) [rule: [B] ||| [C,1] [C,2] ||| [C,2] [C,1] ||| 0.284094687123]
+      [[C],0,2,(('four',),),0.69 (0.69+0.00)]
+      Deduction: 0.69 (LM:0.00,ITG:0.69,UnknownWord:0.00) [rule: [C] ||| five five ||| four ||| 0.5]
+      [[C],2,3,(('three',),),1.39 (1.39+0.00)]
+      Deduction: 1.39 (LM:0.00,ITG:1.39,UnknownWord:0.00) [rule: [C] ||| three ||| three ||| 0.25]
+
+-----------------Hypergraph Stats-----------------
+[nodes]:                                        19
+[edges]:                                        30
+
+------------------Decoding Stats------------------
+[non-unary edges proposed]:                      0
+[unary edges proposed]:                          0
+[total edges proposed]:                          0
+[cubes (non-unary -LM edges)]:                   0
+
+-------------------Agenda Stats-------------------
+[pushed]:                                       62
+[popped]:                                       35
+[dead pop]:                                      6
+[closed]:                                       34
+[final agenda size]:                            21
+[neighbors closed]:                             64
+[neighbors tried]:                              96
+
+-------------------Chart Stats--------------------
+[in chart]:                                     47
+[dead in chart]:                                 6
+[pruned]:                                        0
+[prepruned]:                                     0
+[merged]:                                       37
+[unary cycle broken]:                            0
+[negative cost edge pruned]:                     0
+[negative unary edge pruned]:                    0
+
+
+[4][3 words] four six three
+
+three four four
+
+[[GOAL],0,3,(('<s>', '<s>', '_*_', '</s>', '</s>'),),22.49 (22.49+0.00)]
+Deduction: 9.98 (LM:2.17,ITG:-0.00,UnknownWord:0.00) [rule: [GOAL] ||| [S,1] ||| <s> <s> [S,1] </s> </s> ||| 1.0]
+  [[S],0,3,(('three', 'four', '_*_', 'four', 'four'),),12.51 (12.51+0.00)]
+  Deduction: 3.88 (LM:0.00,ITG:3.88,UnknownWord:0.00) [rule: [S] ||| [B,1] ||| [B,1] ||| 0.0206613804082]
+    [[B],0,3,(('three', 'four', '_*_', 'four', 'four'),),8.63 (8.63+0.00)]
+    Deduction: 1.94 (LM:0.10,ITG:1.50,UnknownWord:0.00) [rule: [B] ||| [C,1] [A,2] ||| [A,2] [C,1] ||| 0.223688012366]
+      [[C],0,1,(('four', 'four'),),1.39 (1.39+0.00)]
+      Deduction: 1.39 (LM:0.00,ITG:1.39,UnknownWord:0.00) [rule: [C] ||| four ||| four four ||| 0.25]
+      [[A],1,3,(('three',),),5.30 (5.30+0.00)]
+      Deduction: 1.61 (LM:0.00,ITG:1.61,UnknownWord:0.00) [rule: [A] ||| [C,1] [C,2] ||| [C,1] [C,2] ||| 0.199454569021]
+        [[C],1,2,((),),2.30 (2.30+0.00)]
+        Deduction: 2.30 (LM:0.00,ITG:2.30,UnknownWord:0.00) [rule: [C] ||| six |||  ||| 0.1]
+        [[C],2,3,(('three',),),1.39 (1.39+0.00)]
+        Deduction: 1.39 (LM:0.00,ITG:1.39,UnknownWord:0.00) [rule: [C] ||| three ||| three ||| 0.25]
+
+-----------------Hypergraph Stats-----------------
+[nodes]:                                        12
+[edges]:                                        18
+
+------------------Decoding Stats------------------
+[non-unary edges proposed]:                      0
+[unary edges proposed]:                          0
+[total edges proposed]:                          0
+[cubes (non-unary -LM edges)]:                   0
+
+-------------------Agenda Stats-------------------
+[pushed]:                                       40
+[popped]:                                       22
+[dead pop]:                                      5
+[closed]:                                       21
+[final agenda size]:                            13
+[neighbors closed]:                             34
+[neighbors tried]:                              51
+
+-------------------Chart Stats--------------------
+[in chart]:                                     28
+[dead in chart]:                                 4
+[pruned]:                                        0
+[prepruned]:                                     0
+[merged]:                                       20
+[unary cycle broken]:                            0
+[negative cost edge pruned]:                     0
+[negative unary edge pruned]:                    0
+
+
+[5][2 words] four 368
+
+four four
+
+[[GOAL],0,2,(('<s>', '<s>', '_*_', '</s>', '</s>'),),115.84 (115.84+0.00)]
+Deduction: 13.82 (LM:3.00,ITG:-0.00,UnknownWord:0.00) [rule: [GOAL] ||| [S,1] ||| <s> <s> [S,1] </s> </s> ||| 1.0]
+  [[S],0,2,(('four', 'four'),),102.02 (102.02+0.00)]
+  Deduction: 0.02 (LM:0.00,ITG:0.02,UnknownWord:0.00) [rule: [S] ||| [A,1] ||| [A,1] ||| 0.978379692925]
+    [[A],0,2,(('four', 'four'),),102.00 (102.00+0.00)]
+    Deduction: 1.61 (LM:0.00,ITG:1.61,UnknownWord:0.00) [rule: [A] ||| [C,1] [C,2] ||| [C,1] [C,2] ||| 0.199454569021]
+      [[C],0,1,(('four', 'four'),),1.39 (1.39+0.00)]
+      Deduction: 1.39 (LM:0.00,ITG:1.39,UnknownWord:0.00) [rule: [C] ||| four ||| four four ||| 0.25]
+      [[C],1,2,((),),99.00 (99.00+0.00)]
+      Deduction: 99.00 (LM:0.00,ITG:-0.00,UnknownWord:1.00) [rule: [C] ||| 368 |||  ||| 1.0 1.0 1.0 1.0 1.0]
+
+-----------------Hypergraph Stats-----------------
+[nodes]:                                        13
+[edges]:                                        17
+
+------------------Decoding Stats------------------
+[non-unary edges proposed]:                      0
+[unary edges proposed]:                          0
+[total edges proposed]:                          0
+[cubes (non-unary -LM edges)]:                   0
+
+-------------------Agenda Stats-------------------
+[pushed]:                                       21
+[popped]:                                       15
+[dead pop]:                                      2
+[closed]:                                       14
+[final agenda size]:                             4
+[neighbors closed]:                              8
+[neighbors tried]:                              15
+
+-------------------Chart Stats--------------------
+[in chart]:                                     18
+[dead in chart]:                                 0
+[pruned]:                                        0
+[prepruned]:                                     0
+[merged]:                                        4
+[unary cycle broken]:                            0
+[negative cost edge pruned]:                     0
+[negative unary edge pruned]:                    0
+
+
+[6][5 words] six four six three six
+
+three four four
+
+[[GOAL],0,5,(('<s>', '<s>', '_*_', '</s>', '</s>'),),26.64 (26.64+0.00)]
+Deduction: 9.98 (LM:2.17,ITG:-0.00,UnknownWord:0.00) [rule: [GOAL] ||| [S,1] ||| <s> <s> [S,1] </s> </s> ||| 1.0]
+  [[S],0,5,(('three', 'four', '_*_', 'four', 'four'),),16.67 (16.67+0.00)]
+  Deduction: 0.02 (LM:0.00,ITG:0.02,UnknownWord:0.00) [rule: [S] ||| [A,1] ||| [A,1] ||| 0.978379692925]
+    [[A],0,5,(('three', 'four', '_*_', 'four', 'four'),),16.64 (16.64+0.00)]
+    Deduction: 2.79 (LM:0.00,ITG:2.79,UnknownWord:0.00) [rule: [A] ||| [C,1] [B,2] ||| [C,1] [B,2] ||| 0.0615371244777]
+      [[C],0,1,((),),2.30 (2.30+0.00)]
+      Deduction: 2.30 (LM:0.00,ITG:2.30,UnknownWord:0.00) [rule: [C] ||| six |||  ||| 0.1]
+      [[B],1,5,(('three', 'four', '_*_', 'four', 'four'),),11.55 (11.55+0.00)]
+      Deduction: 1.94 (LM:0.10,ITG:1.50,UnknownWord:0.00) [rule: [B] ||| [C,1] [A,2] ||| [A,2] [C,1] ||| 0.223688012366]
+        [[C],1,2,(('four', 'four'),),1.39 (1.39+0.00)]
+        Deduction: 1.39 (LM:0.00,ITG:1.39,UnknownWord:0.00) [rule: [C] ||| four ||| four four ||| 0.25]
+        [[A],2,5,(('three',),),8.22 (8.22+0.00)]
+        Deduction: 0.62 (LM:0.00,ITG:0.62,UnknownWord:0.00) [rule: [A] ||| [A,1] [C,2] ||| [A,1] [C,2] ||| 0.537968537378]
+          [[A],2,4,(('three',),),5.30 (5.30+0.00)]
+          Deduction: 1.61 (LM:0.00,ITG:1.61,UnknownWord:0.00) [rule: [A] ||| [C,1] [C,2] ||| [C,1] [C,2] ||| 0.199454569021]
+            [[C],2,3,((),),2.30 (2.30+0.00)]
+            Deduction: 2.30 (LM:0.00,ITG:2.30,UnknownWord:0.00) [rule: [C] ||| six |||  ||| 0.1]
+            [[C],3,4,(('three',),),1.39 (1.39+0.00)]
+            Deduction: 1.39 (LM:0.00,ITG:1.39,UnknownWord:0.00) [rule: [C] ||| three ||| three ||| 0.25]
+          [[C],4,5,((),),2.30 (2.30+0.00)]
+          Deduction: 2.30 (LM:0.00,ITG:2.30,UnknownWord:0.00) [rule: [C] ||| six |||  ||| 0.1]
+
+-----------------Hypergraph Stats-----------------
+[nodes]:                                        34
+[edges]:                                        80
+
+------------------Decoding Stats------------------
+[non-unary edges proposed]:                      0
+[unary edges proposed]:                          0
+[total edges proposed]:                          0
+[cubes (non-unary -LM edges)]:                   0
+
+-------------------Agenda Stats-------------------
+[pushed]:                                      152
+[popped]:                                       76
+[dead pop]:                                     59
+[closed]:                                       75
+[final agenda size]:                            17
+[neighbors closed]:                            215
+[neighbors tried]:                             299
+
+-------------------Chart Stats--------------------
+[in chart]:                                     82
+[dead in chart]:                                31
+[pruned]:                                        0
+[prepruned]:                                     0
+[merged]:                                      159
+[unary cycle broken]:                            0
+[negative cost edge pruned]:                     0
+[negative unary edge pruned]:                    0
+
+
+[7][6 words] one two three four five six
+
+one two three four four four
+
+[[GOAL],0,6,(('<s>', '<s>', '_*_', '</s>', '</s>'),),44.82 (44.82+0.00)]
+Deduction: 6.42 (LM:1.39,ITG:-0.00,UnknownWord:0.00) [rule: [GOAL] ||| [S,1] ||| <s> <s> [S,1] </s> </s> ||| 1.0]
+  [[S],0,6,(('one', 'two', '_*_', 'four', 'four'),),38.40 (38.40+0.00)]
+  Deduction: 0.02 (LM:0.00,ITG:0.02,UnknownWord:0.00) [rule: [S] ||| [A,1] ||| [A,1] ||| 0.978379692925]
+    [[A],0,6,(('one', 'two', '_*_', 'four', 'four'),),38.38 (38.38+0.00)]
+    Deduction: 0.62 (LM:0.00,ITG:0.62,UnknownWord:0.00) [rule: [A] ||| [A,1] [C,2] ||| [A,1] [C,2] ||| 0.537968537378]
+      [[A],0,5,(('one', 'two', '_*_', 'four', 'four'),),35.46 (35.46+0.00)]
+      Deduction: 4.41 (LM:0.82,ITG:0.62,UnknownWord:0.00) [rule: [A] ||| [A,1] [C,2] ||| [A,1] [C,2] ||| 0.537968537378]
+        [[A],0,4,(('one', 'two', '_*_', 'four', 'four'),),21.83 (21.83+0.00)]
+        Deduction: 2.76 (LM:0.46,ITG:0.62,UnknownWord:0.00) [rule: [A] ||| [A,1] [C,2] ||| [A,1] [C,2] ||| 0.537968537378]
+          [[A],0,3,(('one', 'two', '_*_', 'two', 'three'),),17.69 (17.69+0.00)]
+          Deduction: 11.91 (LM:2.45,ITG:0.62,UnknownWord:0.00) [rule: [A] ||| [A,1] [C,2] ||| [A,1] [C,2] ||| 0.537968537378]
+            [[A],0,2,(('one', 'two'),),4.38 (4.38+0.00)]
+            Deduction: 1.61 (LM:0.00,ITG:1.61,UnknownWord:0.00) [rule: [A] ||| [C,1] [C,2] ||| [C,1] [C,2] ||| 0.199454569021]
+              [[C],0,1,(('one',),),1.39 (1.39+0.00)]
+              Deduction: 1.39 (LM:0.00,ITG:1.39,UnknownWord:0.00) [rule: [C] ||| one ||| one ||| 0.25]
+              [[C],1,2,(('two',),),1.39 (1.39+0.00)]
+              Deduction: 1.39 (LM:0.00,ITG:1.39,UnknownWord:0.00) [rule: [C] ||| two ||| two ||| 0.25]
+            [[C],2,3,(('three',),),1.39 (1.39+0.00)]
+            Deduction: 1.39 (LM:0.00,ITG:1.39,UnknownWord:0.00) [rule: [C] ||| three ||| three ||| 0.25]
+          [[C],3,4,(('four', 'four'),),1.39 (1.39+0.00)]
+          Deduction: 1.39 (LM:0.00,ITG:1.39,UnknownWord:0.00) [rule: [C] ||| four ||| four four ||| 0.25]
+        [[C],4,5,(('four',),),9.21 (9.21+0.00)]
+        Deduction: 9.21 (LM:0.00,ITG:9.21,UnknownWord:0.00) [rule: [C] ||| five ||| four ||| 0.0001]
+      [[C],5,6,((),),2.30 (2.30+0.00)]
+      Deduction: 2.30 (LM:0.00,ITG:2.30,UnknownWord:0.00) [rule: [C] ||| six |||  ||| 0.1]
+
+-----------------Hypergraph Stats-----------------
+[nodes]:                                       165
+[edges]:                                       384
+
+------------------Decoding Stats------------------
+[non-unary edges proposed]:                      0
+[unary edges proposed]:                          0
+[total edges proposed]:                          0
+[cubes (non-unary -LM edges)]:                   0
+
+-------------------Agenda Stats-------------------
+[pushed]:                                      870
+[popped]:                                      413
+[dead pop]:                                    332
+[closed]:                                      412
+[final agenda size]:                           125
+[neighbors closed]:                           2788
+[neighbors tried]:                            3862
+
+-------------------Chart Stats--------------------
+[in chart]:                                    424
+[dead in chart]:                               113
+[pruned]:                                      201
+[prepruned]:                                  1100
+[merged]:                                      681
+[unary cycle broken]:                            0
+[negative cost edge pruned]:                     0
+[negative unary edge pruned]:                    0
+
+
+[8][5 words] one one seven two two
+
+one one two two two two
+
+[[GOAL],0,5,(('<s>', '<s>', '_*_', '</s>', '</s>'),),30.23 (30.23+0.00)]
+Deduction: 7.59 (LM:1.65,ITG:-0.00,UnknownWord:0.00) [rule: [GOAL] ||| [S,1] ||| <s> <s> [S,1] </s> </s> ||| 1.0]
+  [[S],0,5,(('one', 'one', '_*_', 'two', 'two'),),22.63 (22.63+0.00)]
+  Deduction: 0.02 (LM:0.00,ITG:0.02,UnknownWord:0.00) [rule: [S] ||| [A,1] ||| [A,1] ||| 0.978379692925]
+    [[A],0,5,(('one', 'one', '_*_', 'two', 'two'),),22.61 (22.61+0.00)]
+    Deduction: 6.04 (LM:1.18,ITG:0.62,UnknownWord:0.00) [rule: [A] ||| [A,1] [C,2] ||| [A,1] [C,2] ||| 0.537968537378]
+      [[A],0,4,(('one', 'one', '_*_', 'two', 'two'),),15.19 (15.19+0.00)]
+      Deduction: 6.04 (LM:1.18,ITG:0.62,UnknownWord:0.00) [rule: [A] ||| [A,1] [C,2] ||| [A,1] [C,2] ||| 0.537968537378]
+        [[A],0,3,(('one', 'one', '_*_', 'two', 'two'),),7.77 (7.77+0.00)]
+        Deduction: 2.69 (LM:0.45,ITG:0.62,UnknownWord:0.00) [rule: [A] ||| [A,1] [C,2] ||| [A,1] [C,2] ||| 0.537968537378]
+          [[A],0,2,(('one', 'one'),),4.38 (4.38+0.00)]
+          Deduction: 1.61 (LM:0.00,ITG:1.61,UnknownWord:0.00) [rule: [A] ||| [C,1] [C,2] ||| [C,1] [C,2] ||| 0.199454569021]
+            [[C],0,1,(('one',),),1.39 (1.39+0.00)]
+            Deduction: 1.39 (LM:0.00,ITG:1.39,UnknownWord:0.00) [rule: [C] ||| one ||| one ||| 0.25]
+            [[C],1,2,(('one',),),1.39 (1.39+0.00)]
+            Deduction: 1.39 (LM:0.00,ITG:1.39,UnknownWord:0.00) [rule: [C] ||| one ||| one ||| 0.25]
+          [[C],2,3,(('two', 'two'),),0.69 (0.69+0.00)]
+          Deduction: 0.69 (LM:0.00,ITG:0.69,UnknownWord:0.00) [rule: [C] ||| seven ||| two two ||| 0.5]
+        [[C],3,4,(('two',),),1.39 (1.39+0.00)]
+        Deduction: 1.39 (LM:0.00,ITG:1.39,UnknownWord:0.00) [rule: [C] ||| two ||| two ||| 0.25]
+      [[C],4,5,(('two',),),1.39 (1.39+0.00)]
+      Deduction: 1.39 (LM:0.00,ITG:1.39,UnknownWord:0.00) [rule: [C] ||| two ||| two ||| 0.25]
+
+-----------------Hypergraph Stats-----------------
+[nodes]:                                        59
+[edges]:                                       148
+
+------------------Decoding Stats------------------
+[non-unary edges proposed]:                      0
+[unary edges proposed]:                          0
+[total edges proposed]:                          0
+[cubes (non-unary -LM edges)]:                   0
+
+-------------------Agenda Stats-------------------
+[pushed]:                                      392
+[popped]:                                      181
+[dead pop]:                                    117
+[closed]:                                      180
+[final agenda size]:                            94
+[neighbors closed]:                            848
+[neighbors tried]:                            1124
+
+-------------------Chart Stats--------------------
+[in chart]:                                    214
+[dead in chart]:                               116
+[pruned]:                                        2
+[prepruned]:                                    18
+[merged]:                                      619
+[unary cycle broken]:                            0
+[negative cost edge pruned]:                     0
+[negative unary edge pruned]:                    0
+
+
+[9][3 words] one seven eight
+
+one two two eight
+
+[[GOAL],0,3,(('<s>', '<s>', '_*_', '</s>', '</s>'),),16.30 (16.30+0.00)]
+Deduction: 6.42 (LM:1.39,ITG:-0.00,UnknownWord:0.00) [rule: [GOAL] ||| [S,1] ||| <s> <s> [S,1] </s> </s> ||| 1.0]
+  [[S],0,3,(('one', 'two', '_*_', 'two', 'eight'),),9.88 (9.88+0.00)]
+  Deduction: 0.02 (LM:0.00,ITG:0.02,UnknownWord:0.00) [rule: [S] ||| [A,1] ||| [A,1] ||| 0.978379692925]
+    [[A],0,3,(('one', 'two', '_*_', 'two', 'eight'),),9.86 (9.86+0.00)]
+    Deduction: 2.24 (LM:0.35,ITG:0.62,UnknownWord:0.00) [rule: [A] ||| [A,1] [C,2] ||| [A,1] [C,2] ||| 0.537968537378]
+      [[A],0,2,(('one', 'two', '_*_', 'two', 'two'),),5.31 (5.31+0.00)]
+      Deduction: 3.23 (LM:0.35,ITG:1.61,UnknownWord:0.00) [rule: [A] ||| [C,1] [C,2] ||| [C,1] [C,2] ||| 0.199454569021]
+        [[C],0,1,(('one',),),1.39 (1.39+0.00)]
+        Deduction: 1.39 (LM:0.00,ITG:1.39,UnknownWord:0.00) [rule: [C] ||| one ||| one ||| 0.25]
+        [[C],1,2,(('two', 'two'),),0.69 (0.69+0.00)]
+        Deduction: 0.69 (LM:0.00,ITG:0.69,UnknownWord:0.00) [rule: [C] ||| seven ||| two two ||| 0.5]
+      [[C],2,3,(('eight',),),2.30 (2.30+0.00)]
+      Deduction: 2.30 (LM:0.00,ITG:2.30,UnknownWord:0.00) [rule: [C] ||| eight ||| eight ||| 0.1]
+
+-----------------Hypergraph Stats-----------------
+[nodes]:                                        20
+[edges]:                                        25
+
+------------------Decoding Stats------------------
+[non-unary edges proposed]:                      0
+[unary edges proposed]:                          0
+[total edges proposed]:                          0
+[cubes (non-unary -LM edges)]:                   0
+
+-------------------Agenda Stats-------------------
+[pushed]:                                      104
+[popped]:                                       47
+[dead pop]:                                      3
+[closed]:                                       46
+[final agenda size]:                            54
+[neighbors closed]:                            101
+[neighbors tried]:                             148
+
+-------------------Chart Stats--------------------
+[in chart]:                                     79
+[dead in chart]:                                14
+[pruned]:                                        0
+[prepruned]:                                     0
+[merged]:                                       42
+[unary cycle broken]:                            0
+[negative cost edge pruned]:                     0
+[negative unary edge pruned]:                    0
+
+

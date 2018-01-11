@@ -1,0 +1,9 @@
+--bin_size=20
+--rule_bin_size=5
+--features=LM:4.6051701859880918,ITG:1,UnknownWord:99
+--grammars=d.3gram.grammar
+--input=input
+--unknown_nonterminal=[C]
+--lm=d.lm.3gram.new
+--show_time=false
+#--features=ITG:1,UnknownWord:99

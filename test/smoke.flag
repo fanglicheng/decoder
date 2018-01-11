@@ -1,0 +1,11 @@
+--bin_size=5
+--rule_bin_size=20
+--features=LM:0.1,PhraseFE:0.1,PhraseLexFE:0.1,PhraseEF:0.1,PhraseLexEF:0.1,PhraseCount:0.1,LengthPenalty:-0.2,GlueRule:0.3,UnknownWord:3
+--grammars=abc_glue.grammar,smoke_phrase.grammar
+--input=test_maxlen_40
+--unknown_nonterminal=[A]
+--lm=smoke.lm
+--show_time=false
+#--features=ITG:1,UnknownWord:99
+--heuristic=best_first
+--do=1

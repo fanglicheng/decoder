@@ -1,0 +1,30 @@
+
+\data\
+ngram 1=6
+ngram 2=10
+ngram 3=0
+
+\1-grams:
+-0.69897	one	-7.259963
+-0.69897	two	-7.259963
+-0.69897	three	-7.259963
+-0.69897	four	-7.259963
+-0.69897	</s>
+-99	<s>	-7.259963
+
+\2-grams:
+-0.30103	one one
+-0.30103	one two
+-0.30103	two two
+-0.30103	two </s>
+-0.30103	three three
+-0.30103	three four
+-0.30103	four four
+-0.30103	four </s>
+-0.30103	<s> one
+-0.30103	<s> three
+-0.30103	<s> eight
+
+\3-grams:
+
+\end\

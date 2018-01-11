@@ -1,0 +1,87 @@
+# result using bleu (should use bleu2)
+BLEU = 27.02, 70.9/35.6/19.4/10.9 (BP=1.000, ratio=1.009, hyp_len=8914, ref_len=8838)
+
+# redo Tag's sampling experiment
+$TAG/decoder-sampling/hiero_extractor/sampler.py $TAG/train/training.chi $TAG/train/training.eng.brackets_restored $TAG/train/training.a --lex=$TAG/data/lex.e2f,$TAG/data/lex.f2e --alpha 5.0 --discount 0.5 --iter 250 --dump_iter 10 --dump iter-sampled-poisson --interval 5000 --level_inc=10 &
+
+# first refinement experiment
+$TAG/decoder/decoder.py --flagfile baseline-refine.flag --output output-refine --run_dir=run-refine
+
+# first BLEU score
+bleu2 $TAG/dev/dev.eng. < output-refine-glue
+BLEU = 21.92, 67.6/30.9/15.1/7.3 (BP=1.000, ratio=1.007, hyp_len=8841, ref_len=8776)
+
+# BLEU for every iteration. Use X-1 as the unknown nonterminal here when using SX1 glue grammar
+ITER=100; $TAG/decoder/decoder.py --flagfile baseline-refine.flag --output output-refine-iter-$ITER --run_dir=run-refine-iter-$ITER --grammars=iter-sampled-poisson-refine/sampled-iter-$ITER.hiero.dev.gr,monotonic_glue.gr --unknown_nonterminal=X-1
+
+# Test sampler
+ $TAG/decoder-sampling/hiero_extractor/sampler_refine.py ~/decoder/test-extractor/c ~/decoder/test-extractor/e ~/decoder/test-extractor/c-e.a --lex=/u/lfang/decoder/test-extractor/lex.e2f,/u/lfang/decoder/test-extractor/lex.f2e --alpha 5.0 --discount 0.5 --iter 30 --dump_iter 10 --dump iter-test --interval 5000 --level_inc=10 --seed_random
+
+# One Pitman-Yor process per <lhs, rule size> pair
+$TAG/decoder-sampling/hiero_extractor/sampler_refine.py $TAG/train/training.chi $TAG/train/training.eng.brackets_restored $TAG/train/training.a --lex=$TAG/data/lex.e2f,$TAG/data/lex.f2e --alpha 5.0 --discount 0.5 --iter 250 --dump_iter 10 --dump iter-refine-lhs --interval 5000 --level_inc=10 --lhs_conditional &
+
+# Sample NT on minimal rules only
+nohup $TAG/decoder-sampling/hiero_extractor/sampler_refine.py $TAG/train/training.chi $TAG/train/training.eng.brackets_restored $TAG/train/training.a --lex=$TAG/data/lex.e2f,$TAG/data/lex.f2e --alpha 5.0 --discount 0.5 --iter 100 --dump_iter 10 --dump iter-refine-min-s4 --interval 5000 --level_inc=10 --lhs_conditional --nosample_cut&
+
+# 4-way split
+nohup $TAG/decoder-sampling/hiero_extractor/sampler_refine.py $TAG/train/training.chi $TAG/train/training.eng.brackets_restored $TAG/train/training.a --lex=$TAG/data/lex.e2f,$TAG/data/lex.f2e --alpha 5.0 --discount 0.5 --iter 100 --dump_iter 10 --dump iter-refine-min-s4 --interval 5000 --level_inc=10 --lhs_conditional --splits=4 --nosample_cut&
+
+# Sample NT on minimal rules only, with DP posterior
+$TAG/decoder-sampling/hiero_extractor/sampler_refine.py $TAG/train/training.chi $TAG/train/training.eng.brackets_restored $TAG/train/training.a --lex=$TAG/data/lex.e2f,$TAG/data/lex.f2e --alpha 5.0 --iter 100 --dump_iter 10 --dump iter-refine-min-dp --interval 5000 --level_inc=10 --lhs_conditional --nosample_cut --model=DP &
+
+# Experiments with multi-level splits
+$TAG/decoder-sampling/hiero_extractor/sampler_refine.py $TAG/train/training.chi $TAG/train/training.eng.brackets_restored $TAG/train/training.a --lex=$TAG/data/lex.e2f,$TAG/data/lex.f2e --alpha 5.0 --iter 100 --dump_iter 10 --dump iter-min-dp-level10-split20-alpha5 --interval 5000 --level_inc=10 --lhs_conditional --nosample_cut --model=DP --split_iter=20 &
+
+$TAG/decoder-sampling/hiero_extractor/sampler_refine.py $TAG/train/training.chi $TAG/train/training.eng.brackets_restored $TAG/train/training.a --lex=$TAG/data/lex.e2f,$TAG/data/lex.f2e --alpha 50 --iter 100 --dump_iter 10 --dump iter-min-dp-level10-split20-alpha50 --interval 5000 --level_inc=10 --lhs_conditional --nosample_cut --model=DP --split_iter=20 &
+~/decoder/sampler.py ~/decoder/test-extractor/c10 ~/decoder/test-extractor/e10 ~/decoder/test-extractor/c-e.a10 --lex=/u/lfang/decoder/test-extractor/lex.e2f,/u/lfang/decoder/test-extractor/lex.f2e --alpha 5.0 --iter 200 --dump_iter 10 --dump iter-notype10-nolevel --interval 5000 --seed_random --nosample_edge --split_iter=1000 --nosplit_at_iter_0 --model=DP --type
+$TAG/decoder-sampling/hiero_extractor/sampler_refine.py $TAG/train/training.chi $TAG/train/training.eng.brackets_restored $TAG/train/training.a --lex=$TAG/data/lex.e2f,$TAG/data/lex.f2e --alpha 5 --iter 100 --dump_iter 10 --dump iter-min-dp-split20-alpha5 --interval 5000 --lhs_conditional --nosample_cut --model=DP --split_iter=20 &
+
+nohup $TAG/decoder-sampling/hiero_extractor/sampler_refine.py $TAG/train/training.chi $TAG/train/training.eng.brackets_restored $TAG/train/training.a --lex=$TAG/data/lex.e2f,$TAG/data/lex.f2e --alpha 5 --iter 100 --dump_iter 10 --dump iter-min-PY-split20-alpha5 --interval 5000 --lhs_conditional --nosample_cut --model=PY --split_iter=20 &
+
+# "Braindead" backoff by averaging over before and after split iterations
+
+# Implement smoothing in decoder
+# Use my own decoder, note the unknown nonterminal changed
+~/decoder/decoder.py --flagfile=/u/lfang/symbol-refine/baseline-refine.flag --output output-smooth --run_dir=run-smooth --grammars=iter-min-dp-split40-alpha5/sampled-iter-040-m.hiero.dev.gr,/u/lfang/symbol-refine/monotonic_glue.gr --unknown_nonterminal=[X-0] --input=/p/mt-scratch2/chung/grammar-induction-small/dev/dev.chi
+# BLEU dropped 0.2 for some reason using my own decoder, part of the reason is --glue_span
+
+# Run 2000 iterations
+nohup $TAG/decoder-sampling/hiero_extractor/sampler_refine.py $TAG/train/training.chi $TAG/train/training.eng.brackets_restored $TAG/train/training.a --lex=$TAG/data/lex.e2f,$TAG/data/lex.f2e --alpha 5 --iter 2000 --dump_iter 100 --dump iter-min-dp-split1000-alpha5 --interval 5000 --lhs_conditional --nosample_cut --model=DP --split_iter=1000 &
+
+# First test of type-based sampling
+ ~/decoder/sampler.py ~/decoder/test-extractor/c ~/decoder/test-extractor/e ~/decoder/test-extractor/c-e.a --lex=/u/lfang/decoder/test-extractor/lex.e2f,/u/lfang/decoder/test-extractor/lex.f2e --alpha 5.0 --discount 0.5 --iter 200 --dump_iter 100 --dump iter-test12 --interval 5000 --level_inc=10 --seed_random --nosample_edge --split_iter=1000 --nosplit_at_iter_0 --model=DP --type
+
+# test with 10 repeated sentences
+~/decoder/sampler.py ~/decoder/test-extractor/c10 ~/decoder/test-extractor/e10 ~/decoder/test-extractor/c-e.a10 --lex=/u/lfang/decoder/test-extractor/lex.e2f,/u/lfang/decoder/test-extractor/lex.f2e --alpha 5.0 --iter 200 --dump_iter 10 --dump iter-type10 --interval 5000 --level_inc=10 --seed_random --nosample_edge --split_iter=1000 --nosplit_at_iter_0 --model=DP --type
+
+# without level constraint
+~/decoder/sampler.py ~/decoder/test-extractor/c10 ~/decoder/test-extractor/e10 ~/decoder/test-extractor/c-e.a10 --lex=/u/lfang/decoder/test-extractor/lex.e2f,/u/lfang/decoder/test-extractor/lex.f2e --alpha 5.0 --iter 200 --dump_iter 10 --dump iter-notype10-nolevel --interval 5000 --seed_random --nosample_edge --split_iter=1000 --nosplit_at_iter_0 --model=DP --type
+
+# use type-based sampling for the original experiment
+~/decoder/sampler.py $TAG/train/training.chi $TAG/train/training.eng.brackets_restored $TAG/train/training.a --lex=$TAG/data/lex.e2f,$TAG/data/lex.f2e --alpha 5.0 --discount 0.5 --iter 250 --dump_iter 10 --dump iter-sampled-poisson-type --interval 5000 --level_inc=10 --type &
+
+# repeat percy liang's simple expr
+~/decoder/sampler.py ab.c ab.e ab.a --alpha 3 --base abtest --iter 50 --dump_iter 1 --dump iter-abtest-type --nosample_edge --model=DP --type
+
+# type-based sampling for the original experiment, with no level constraint
+~/decoder/sampler.py $TAG/train/training.chi $TAG/train/training.eng.brackets_restored $TAG/train/training.a --lex=$TAG/data/lex.e2f,$TAG/data/lex.f2e --alpha 5.0 --discount 0.5 --iter 250 --dump_iter 10 --dump iter-sampled-poisson-type-nolevel --type &
+
+# check how often site check fails
+~/decoder/sampler.py c1000 e1000 a1000 --alpha 5.0 --iter 100 --dump_iter 10 --dump iter-test-sent1000-sitechecksucess --level_inc=10 --seed_random --model=DP --type
+
+# type-based sampling for original data set, with simple DP model, to test convergence
+~/decoder/sampler.py $TAG/train/training.chi $TAG/train/training.eng.brackets_restored $TAG/train/training.a --lex=$TAG/data/lex.e2f,$TAG/data/lex.f2e --alpha 5.0 --iter 250 --dump_iter 10 --dump iter-sampled-poisson-type-nolevel-dp --type --model=DP&
+
+~/decoder/sampler.py $TAG/train/training.chi $TAG/train/training.eng.brackets_restored $TAG/train/training.a --lex=$TAG/data/lex.e2f,$TAG/data/lex.f2e --alpha 5.0 --iter 250 --dump_iter 10 --dump iter-sampled-poisson-notype-nolevel-dp --notype --model=DP &
+
+# generate type vs notype figure for thesis. this is the py model. doesn't compare to CL paper.
+gnuplot type-vs-notype-loglikelihood.plt >| type-vs-notype.eps
+
+# Find the index bug!
+nohup ~/decoder/sampler.py $TAG/train/training.chi $TAG/train/training.eng.brackets_restored $TAG/train/training.a --lex=$TAG/data/lex.e2f,$TAG/data/lex.f2e --alpha 5.0 --discount 0.5 --iter 250 --dump_iter 10 --dump iter-bug --interval 5000 --level_inc=10 --type --seed_random &
+
+# Rerun experiments in the paper
+nohup ~/decoder/sampler.py $TAG/train/training.chi $TAG/train/training.eng.brackets_restored $TAG/train/training.a --lex=$TAG/data/lex.e2f,$TAG/data/lex.f2e --alpha 5.0 --discount 0.5 --iter 250 --dump_iter 10 --dump iter-rerun --interval 5000 --level_inc=10 &
+
+# Looking for bug with random split point and edge selection
+nohup ~/decoder/sampler.py c1000 e1000 a1000 --alpha 5.0 --discount 0.5 --iter 1000 --dump iter-bug --interval 5000 --seed_random --random_choice —-type &
